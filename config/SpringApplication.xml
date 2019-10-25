@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+	
+	<bean id="p1"  class="com.beans.Person">
+		<property name="userName" value="testName"></property>
+		<property name="userAge" value="20"></property>
+		<property name="userEmail" value="192sadf"></property>
+		<property name="userSex" value="1"></property>
+	</bean>
+	<!-- 可以省略name参数，但是这样的话必须按照构造器中参数的顺序写 ,可以使用index索引来配置
+	
+	<bean id="p2" class="com.beans.Person">
+		<constructor-arg name="userName" value="p2name"></constructor-arg>
+		<constructor-arg name="userEmail" value="sss"></constructor-arg>
+		<constructor-arg name="userAge" value="20"></constructor-arg>
+		<constructor-arg name="userSex" value="0"></constructor-arg>
+	</bean>
+	 -->
+	<!-- 通过名称空间,名称空间用来区分标签的 -->
+	<bean id="p3" class="com.beans.Person" p:userAge="12" p:userEmail="test.com"></bean>
+	
+	<bean id ="car1" class="com.beans.Car">
+		<property name="car_name" value="小车"></property>
+		<property name="car_price" value="123454"></property>
+		<property name="car_color" value="黑色"></property>
+	</bean>
+	<bean id="book1" class="com.beans.Book">
+		<property name="book_name" value="mybook"></property>
+		<property name="book_price" value="12"></property>
+		<property name="book_auther" value="wuming"></property>
+	</bean>
+	<bean id="p4" class="com.beans.Person">
+		<!-- 可以通过ref的方式引用容器中已经存在的对象
+		<property name="car" ref="car1"></property>
+		 -->
+		<!-- 也可以使用内部自己创建的对象,内部bean只能在内部使用不能再外边 使用，写id是没有用的 -->
+		<property name="car">
+			<bean class="com.beans.Car">
+				<property name="car_name" value="mycar"></property>
+				<property name="car_price" value="123"></property>
+				<property name="car_color" value="mylikecolor"></property>
+			</bean>
+		</property>
+		<property name="books">
+			<list>
+				<bean class="com.beans.Book" p:book_name="testtest"></bean>
+				<ref bean="book1"/>
+			</list>
+		</property>
+		<property name="map">
+			<map>
+				<entry key="01" value="sdfadf"></entry>
+				<entry key="02" value="12"></entry>
+				<entry key="03" value-ref="book1"></entry>
+				<entry key="04">
+					<bean class="com.beans.Car" p:car_name="baoma"></bean>
+				</entry>
+			</map>
+		</property>
+		<!-- 默认都是string类型的 -->
+		<property name="properties">
+			<props>
+				<prop key="root">root</prop>
+				<prop key="password">password</prop>
+			</props>
+		</property>
+	</bean>
+	<!-- 声明一个公用的map 可以被其他需要map类型数据的对象引用 linkedHashMap对象 -->
+	<util:map id="mytestmap">
+		<entry key="key1" value="keyvalue"></entry>
+	</util:map>
+	
+	<!-- 级联属性 ,可以动态的修改数据-->
+	<bean id="p5" class="com.beans.Person">
+		<property name="car"  ref="car1"></property>
+		<property name="car.car_price" value="123456"></property>
+	</bean>
+	
+</beans>

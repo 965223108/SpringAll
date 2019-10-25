@@ -1,0 +1,16 @@
+spring核心模块：
+	spring-beans
+	spring-context
+	spring-core
+	spring-expression
+这些核心模块还需要一个日志包： commons-loggin
+
+几个问题：
+	1.src 源码包开始的路径，称为类路径的开始，编译之后，源码包中的所有文件都会合并到 lib目录下
+		  Java项目：/lib/即是类路径的开始
+		  web项目： /WEB-INF/classes/即是类路径的开始
+	2. 先 导包在编写配置文件
+
+细节：
+	1. 
+	
