@@ -11,6 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.test.Service.BaseService;
+import com.test.Service.BookService;
+import com.test.Service.CarService;
+import com.test.beans.Book;
+import com.test.beans.Car;
+
 
 /*
  * spring的单元测试包
@@ -24,6 +30,10 @@ public class SpringTestMain {
 	
 	@Autowired
 	private DataSource DataSource;
+	@Autowired
+	private BookService bookService;
+	@Autowired
+	private CarService CarService;
 	
 	@Test
 	public void test01() throws SQLException
@@ -31,6 +41,13 @@ public class SpringTestMain {
 		Connection connection =  DataSource.getConnection();
 		System.out.println(connection);
 		connection.close();
+	}
+	
+	@Test
+	public void test02()
+	{
+		bookService.save();
+		CarService.save();
 	}
 	
 	

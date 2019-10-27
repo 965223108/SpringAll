@@ -4,8 +4,10 @@
 	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:util="http://www.springframework.org/schema/util"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 	
 	<bean id="p1"  class="com.test.beans.Person">
@@ -188,8 +190,23 @@
 	    	 -->
 	    	<context:exclude-filter type="annotation" expression=""/>
 	    </context:component-scan>
-	   
+	   <!-- 泛型注入
+	   		注入对象的时候，也会参考泛型参数,
+	   		spring使用带 泛型的弗雷类型来确定这个子类
+	   	 -->
 
+	   <!-- 面向切面编程
 	   
-	
+	   		需要导包：spring-aspects(功能 比较基础)
+	   		加强版的还需要导入：
+	   			springsource.net.sf.cglib
+	   			org.aopalliance
+	   			org.aspectj.weaver
+	   		步骤：
+	   			1. 将目标列和切面类放到 容器中
+	   			2. 声明哪个类是切面类
+	   			3. 告诉spring每个方法什么时候执行
+	   			4. 开启基于AOP注解的功能
+	    -->
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 </beans>
