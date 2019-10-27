@@ -1,10 +1,25 @@
-package com.beans;
+package com.test.beans;
 
 public class Book {
 	
 	private String book_name;
 	private Integer book_price;
 	private String book_auther;
+	
+	/*单实例：
+	 * 容器启动（构造器）-->调用容器的初始化方法-->容器关闭（调用对象的销毁方法）
+	 * 多实例：
+	 * 获取对象（构造器-->初始化方法）-->容器关闭不会调用销毁方法
+	 */
+	public void bookInit()
+	{
+		System.out.println("book init......");
+	}
+	public void bookDestry()
+	{
+		System.out.println("book destry.....");
+	}
+	
 	public String getBook_name() {
 		return book_name;
 	}

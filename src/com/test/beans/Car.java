@@ -1,4 +1,4 @@
-package com.beans;
+package com.test.beans;
 
 public class Car {
 	private String car_name;

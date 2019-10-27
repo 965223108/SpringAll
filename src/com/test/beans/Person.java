@@ -1,4 +1,4 @@
-package com.beans;
+package com.test.beans;
 
 
 import java.util.List;
