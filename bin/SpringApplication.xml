@@ -202,11 +202,38 @@
 	   			springsource.net.sf.cglib
 	   			org.aopalliance
 	   			org.aspectj.weaver
-	   		步骤：
+	   		步骤（注解方式）：
 	   			1. 将目标列和切面类放到 容器中
 	   			2. 声明哪个类是切面类
 	   			3. 告诉spring每个方法什么时候执行
 	   			4. 开启基于AOP注解的功能
 	    -->
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	<!-- AOP配置方式,先把切面加到容器中  -->
+	<bean id="mylog" class="com.test.aop.MyLogUtil"></bean>
+	<aop:config>
+		<!-- 声明切面 -->
+		<aop:aspect ref="mylog" order="10">
+		<!-- 声明一个通用的切入点 -->
+		  <aop:pointcut expression="execution(public int com.test.aop.MyCalculateByCglib.*(int,int))" id="mypointcut"/>
+		  <!-- 切入的方法 -->
+		  <aop:after method="logStart" pointcut-ref="mypointcut"/>
+		  <aop:after-returning method="logSuccess" pointcut="execution(public int com.test.aop.MyCalculateByCglib.*(int,int))" returning="result"/>
+		</aop:aspect>
+	</aop:config>
+	
+	<!-- jdbc template -->
+	<!-- 
+	    步骤：
+	    1. 导包 spring-tx,spring-jdbc,spring-orm
+	 -->
+	 <!-- 普通 template -->
+	 <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+	 	<constructor-arg name="dataSource" ref="datasource"></constructor-arg>
+	 </bean>
+	 <!-- 具名template -->
+	 <bean id="namedTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+	 	<constructor-arg name="dataSource" ref="datasource"></constructor-arg>
+	 </bean>
+	
 </beans>

@@ -15,6 +15,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 /*
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Aspect
+@Order(100)  //多个切面顺序
 public class MyLogUtil {
 	/*
 	 * 抽取可重用的切入点
@@ -70,7 +72,7 @@ public class MyLogUtil {
 	 * 【】
 	 * 普通后置
 	 */
-	@Around(value = "")
+	@Around(value = "myPointCut()")
 	public static Object logall(ProceedingJoinPoint point) throws Exception
 	{
 		Object resultObject=null;
