@@ -5,9 +5,11 @@
 	xmlns:util="http://www.springframework.org/schema/util"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 	
 	<bean id="p1"  class="com.test.beans.Person">
@@ -235,5 +237,23 @@
 	 <bean id="namedTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
 	 	<constructor-arg name="dataSource" ref="datasource"></constructor-arg>
 	 </bean>
+	 
+	 <!-- 声明式事务 -->
+	 <!-- 
+	 	声明书事务
+	 		一致性
+	 		原子性
+	 		隔离性
+	 		持久性
+	 	spring的声明式事务：PlatformTransactionManager 主要这个接口
+	    步骤：
+	    1. 把事务管理切面配置到容器中（管理器DataSourceTransactionManager） 
+	    2. 开启事务控制的注解驱动功能
+	    3.给事务方法添加注解
+	  -->
+	  <tx:annotation-driven transaction-manager="DataSourceTransactionManager"/>
+	  <bean id="DataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	  		<property name="dataSource" ref="datasource"></property>
+	  </bean>
 	
 </beans>
