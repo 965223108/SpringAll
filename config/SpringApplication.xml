@@ -255,5 +255,24 @@
 	  <bean id="DataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 	  		<property name="dataSource" ref="datasource"></property>
 	  </bean>
+	  <!-- 
+	  	基于xml的方式配置事务
+	  	 1. 把事务管理切面配置到容器中（管理器DataSourceTransactionManager） 
+	      2.配置处事务方法
+	      3.告诉spring哪些方法是事务（事务切面按照我们得切入点表达式切入方法）
+	   -->
+	   <aop:config>
+	   		<aop:pointcut expression="execution(* com.test.transition.*.*(..))" id="txpointcut"/>
+	   		<!-- 事务建议增强 advice-ref 执行事务管理器的配置-->
+	   		<aop:advisor advice-ref="myadvice" pointcut-ref="txpointcut"/>
+	   </aop:config>
+	   <!-- 指定是配置哪个事务管理器的 -->
+	   <tx:advice id="myadvice" transaction-manager="DataSourceTransactionManager">
+	   		<!-- 配置事务属性 ,切入点表达式只是告诉spring需要切入哪些方法 ，当时哪些方法需要添加事务还需要自己指定-->
+	   		<tx:attributes>
+	   			<tx:method name="checkout()" propagation="REQUIRED"/>
+	   			<tx:method name="*"/>
+	   		</tx:attributes>
+	   </tx:advice>
 	
 </beans>
